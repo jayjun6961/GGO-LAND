@@ -479,7 +479,73 @@ body::before{
 
 /* 결과 모달 */
 .result-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+
+  /* ── GGO LAND 모드: 사이드바·하단 네비 숨김 ── */
+  body.ggoland-mode .sidebar { display: none !important; }
+  body.ggoland-mode .bottom-nav { display: none !important; }
+  body.ggoland-mode .fish-main,
+  body.ggoland-mode #gw-main,
+  body.ggoland-mode .main-content,
+  body.ggoland-mode .game-main,
+  body.ggoland-mode .main-wrap { margin-left: 0 !important; }
+  /* GGO LAND 상단 바 */
+  .ggoland-bar {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 18px;
+    background: rgba(4,2,13,0.97);
+    border-bottom: 1px solid rgba(124,58,237,0.2);
+    backdrop-filter: blur(20px);
+    position: sticky; top: 0; z-index: 200;
+  }
+  body.ggoland-mode .ggoland-bar { display: flex; }
+  .ggoland-back-btn {
+    display: flex; align-items: center; gap: 7px;
+    padding: 7px 14px; border-radius: 10px;
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(124,58,237,0.3);
+    color: #c084fc; font-size: 12px; font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer; text-decoration: none;
+    transition: all .2s;
+  }
+  .ggoland-back-btn:hover {
+    background: rgba(124,58,237,0.28);
+    box-shadow: 0 0 16px rgba(124,58,237,0.3);
+  }
+  .ggoland-bar-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px; font-weight: 900;
+    background: linear-gradient(90deg, #22d3ee, #c084fc, #fbbf24);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .ggoland-bar-user {
+    margin-left: auto;
+    font-size: 12px; color: #94a3b8;
+    font-family: 'Orbitron', sans-serif;
+  }
 </style>
+<script>
+  // ── GGO LAND 모드 감지 ──
+  (function() {
+    const params = new URLSearchParams(location.search);
+    const ggolandUser = params.get('ggoland_user');
+    if(ggolandUser) {
+      document.body.classList.add('ggoland-mode');
+      // 유저명 표시
+      const userEl = document.getElementById('ggoland-bar-user');
+      if(userEl) userEl.textContent = '👤 ' + ggolandUser;
+      // sessionStorage 세팅 (게임 로그인 상태 유지)
+      sessionStorage.setItem('ggo_username', ggolandUser);
+      sessionStorage.setItem('ggo_logged_in', 'true');
+      // 돌아가기 버튼 URL에 유저명 유지
+      const backBtn = document.querySelector('.ggoland-back-btn');
+      if(backBtn) backBtn.href = 'https://jayjun6961.github.io/GGO-LAND/index.html';
+    }
+  })();
+</script>
 </head>
 <body>
 
