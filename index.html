@@ -315,7 +315,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
     <input type="text" class="login-input" id="nickname-input"
       placeholder="사용할 닉네임을 입력하세요" maxlength="16"
       autocomplete="off" autocorrect="off" spellcheck="false">
-    <div class="login-err" id="login-err">닉네임을 입력해주세요 (2~16자)</div>
+    <div class="login-err" id="login-err">닉네임을 입력해주세요 (1~16자)</div>
     <button class="login-btn" onclick="doLogin()">⚡ 입장하기</button>
   </div>
 </div>
@@ -451,7 +451,7 @@ const STORAGE_KEY = 'ggoland_nickname';
 
 function init() {
   const saved = localStorage.getItem(STORAGE_KEY);
-  if(saved && saved.length >= 2) {
+  if(saved && saved.length >= 1) {
     showMain(saved);
   } else {
     document.getElementById('login-screen').style.display = 'flex';
@@ -466,7 +466,7 @@ function doLogin() {
   const input = document.getElementById('nickname-input');
   const nickname = input.value.trim();
   const err = document.getElementById('login-err');
-  if(nickname.length < 2 || nickname.length > 16) {
+  if(nickname.length < 1 || nickname.length > 16) {
     err.style.display = 'block';
     input.style.borderColor = 'rgba(248,113,113,.6)';
     setTimeout(() => {
